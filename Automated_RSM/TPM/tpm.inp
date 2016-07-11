@@ -1,0 +1,14 @@
+Mesh Filename							# ../Mesh_Files/CYGNSS_final_ascii.stl
+Number of Ensemble Points					# 100
+Gas Surface Interaction Model                              	# 2
+Species Mole Fractions : X = [O, O2, N, N2, He, H]	   	#  0.000000 0.000000 0.000000 0.000000 0.000000 1.000000
+**************************************************************** MIN		MAX *****************
+Magnitude of Bulk Velocity : 			Umag [m/s]	# 5500.0	9500.0
+Yaw Angle Orientation: 	     	  		Theta [degrees]	# 0.0		3.0
+Pitch Angle Orientation:     			Phi [degrees]	# 0.0		90.0
+Satellite Surface Temperature : 		Ts [K]		# 100.0		500.0
+Atmospheric Translational Temperature : 	Ta [K]		# 200.0		2000.0
+Specular Fraction : 	  	      		epsilon		# 0.0		1.0
+Energy Accommodation Coefficient : 		alpha		# 0.0		1.0
+Normal Energy Accommodation Coefficient : 	alphan	   	# 0.0		1.0
+Tangential Momentum Accommodation Coefficient :	sigmat	   	# 0.0		1.0

@@ -1,0 +1,56 @@
+Automated_RSM README
+
+Authors: Andrew Walker, Earl Lawrence
+Los Alamos National Laboratory
+E-mail: awalker@lanl.gov
+Phone: 505-667-8871
+
+
+********** Summary **********
+
+The Automated_RSM code is designed to generate an Response Surface Model (RSM) for the drag coefficient of a satellite from an ensemble of Test Particle Monte Carlo (TPMC) simulations.
+
+The parent folder is broken down into several folders (LHS, MCMC, Mesh_Files, and TPM) and one master file (automatedRSM.py).
+
+
+********** LHS Folder **********
+
+The LHS folder contains a python script (lhsu.py) used to generate a Latin Hyper Cube (LHS) sample for the TPMC ensemble that trains the RSM.
+
+
+********** MCMC Folder **********
+
+The MCMC folder contains matlab files used to generate the RSM by evaluate the probability distribution function (PDF) based on Markov Chain Monte Carlo (MCMC). This folder also contains a utility package (gpmsa) that contains the core MCMC routines. Other files in the MCMC folder will output the RSM file and generate plots showing the agreement between the RSM and TPMC simulations. These plots are located in a folder (testpred) created when running the code.
+
+
+********** Mesh_Files Folder **********
+
+The Mesh_Files folder contains the mesh files required for the TPMC simulations that train the RSM. Make sure that the .stl mesh file for a given satellite is located in this folder when computing a new RSM.
+
+
+********** TPM Folder **********
+
+The TPM folder contains the Test Particle Monte Carlo code for creating both the training and test sets for generate the response surface model. The code uses a particle ray-tracing technique to calculate the particle path intersections with the facets of the satellite mesh. These intersections allow for calculating the differential force that each particle exerts (which when summed over all particles in the simulation gives the total force and the drag coefficient). The code in this folder needs to be compiled with "make".
+
+
+********** automatedRSM.py **********
+
+The automatedRSM.py python script links together the TPMC code written in C and the RSM generation code written in matlab. It also generates the initial LHS ensemble for the TPMC simulations. 
+
+
+*********** How to run the Automated RSM calculator ************
+
+##### First Time Setup #####
+1) The code in the TPM folder must be compiled by typing "make" in the TPM folder.
+
+##### Optional Setup #####
+2) Open tpm.inp and change the input parameters to your desired specifications. 
+3) Make sure that the mesh file matching the mesh filename in tpm.inp is located in the "Mesh_Files" directory.
+4) Open automatedRSM.py and modify the number of processors and satellite name in the "main" function.
+
+##### Required to Run #####
+5) From the main "Automated_RSM" directory, run "python automatedRSM.py" from the command line.
+
+##### Output information #####
+6) The outputs are placed in {RSMNAME}_RSM.dat in the "Automated_RSM" directory. Note that RSMNAME is defined in step #3.
+

@@ -1,0 +1,101 @@
+RSM_Cd README
+
+Author: Andrew Walker
+Intelligence and Space research Division
+Los Alamos National Laboratory
+
+E-mail: awalker@lanl.gov
+Phone: 505-667-8871
+
+********** Summary **********
+
+RSM_Cd is a tool used to calculate the drag coefficient (and ballistic coefficient) of a satellite based on a Response Surface Model (RSM) of a satellite trained from Test Particle Monte Carlo (TPMC) simulations. 
+
+An RSM can be generated using the Automated_RSM tool. 
+
+An area look-up table can be generated using the RSM_Area tool.
+
+RSM_Cd is divided into two folders: data and src
+
+
+********** Data Folder **********
+
+The data folder contains the area and RSM input files. These files are read into the main C code (RSM.c) and the file reads always point to the filenames listed in RSM.inp (assuming they are located in the data folder).
+
+
+********** Source Folder **********
+
+The source folder contains four important files: RSM.c, RSM.h, RSM.inp, and Makefile.
+
+The program RSM can be compiled by simply typing "make" to compile the RSM.c and RSM.h code.
+
+The program is written only for serial applications (i.e. it can't be run in parallel).
+
+
+********** How to Run the Code **********
+
+1) Make sure the code is compiled by typing "make" in the src folder.
+
+2) Modify the input file, RSM.inp, to your desired specifications. Make sure that the RSM and area filenames listed in RSM.inp are present in the data folder.
+
+3) Run the code by typing "./RSM" in the src folder. The output should look something like:
+
+************** Inputs ****************
+RSM filename                              = CYGNSS_RSM.dat
+Area filename                             = CYGNSS_area.dat
+H  Mole Fraction                          = 0.000000e+00
+He Mole Fraction                          = 0.000000e+00
+N  Mole Fraction                          = 0.000000e+00
+N2 Mole Fraction                          = 0.000000e+00
+O  Mole Fraction                          = 1.000000e+00
+O2 Mole Fractoin                          = 0.000000e+00
+Total Number Density, n                   = 1.000000e+16 m^-3
+Satellite Velocity, U                     = 7.500000e+00 m/s
+Atmospheric Translational Temperature, Ta = 1.100000e+03 K
+Satellite Surface Temperature, Ts         = 3.000000e+02 K
+Adsorption Model                          = Freundlich
+Satellite Pitch Angle, Phi                = 0.000000e+00 degrees
+Satellite Yaw Angle, Theta                = 0.000000e+00 degrees
+Surface Material Particle Mass, ms        = 4.479000e-26 kg
+
+************** Outputs ***************
+Drag Coefficient, Cd      = 3.464208e+00
+Projected Area, A         = 1.064957e-01 m^2
+Satellite Mass, m         = 1.000000e+02 kg
+Ballistic Coefficient, BC = 3.689233e-03 m^2/kg
+
+
+***** Details *****
+
+Only the filename (not the path) is necessary for the RSM and Area filenames. The code looks in the data folder by default for the RSM and area files based on the filenames listed in RSM.inp.
+
+The Mole Fractions must add to unity and the code will exit if they do not.
+
+Although the drag coefficient doesn't directly depend on the total density, Cd does depend on the fraction of atomic oxygen that is adsorpbed to the surface of the satellite. The total density, in conjuction with the O mole fraction, is used to calculate the partial pressure of atomic oxygen which yields the fraction of atomic oxygen based on the chosen adsorption model (Langmuir or Freundlich).
+
+All atmospheric and satellite inputs are checked against the maximum range of the RSM. If the values are outside the range of the computed RSM, the code will exit. By default (hard-coded), the maximum RSM values are:
+
+Min n  = 0.0 m^-3   Max n  = 1.0e16 m^-3
+Min U  = 5500 m/s   Max U  = 7500 m/s
+Min Ta = 200 K	    Max Ta = 2000 K
+Min Ts = 100 K	    Max Ts = 500 K
+
+New RSMs should use these same values for the total domain bounds. Note that n is not an RSM input parameter but the maximum limit is determined by the point at which the free molecular assumption breaks down.
+
+The minimum and maximum values of the satellite orientation angles vary by satellite (all values in degrees):
+
+GRACE:  Min Pitch = -3	Max Pitch = +3		Min Yaw = -3	   Max Yaw = +3
+CHAMP:  Min Pitch = -3	Max Pitch = +3		Min Yaw = -3	   Max Yaw = +3
+CYGNSS: Min Pitch =  0	Max Pitch = +90		Min Yaw = -3	   Max Yaw = +3
+ 
+The Satellite Velocity (U) is more specifically the relative velocity between the satellite and the atmosphere (including co-rotation and winds).
+
+Only two strings are allowed for the Adsorption Model (Freundlich & Langmuir). Any other inputs will cause the code to exit.
+
+The Pitch Angle is measured from the X-Y plane with +90 pointing toward the North Pole on a unit sphere and -90 pointing toward the South Pole on a unit sphere.
+
+The Yaw Angle is measured in the X-Y plane from the X-axis with a maximum possible range of -180 to +180. This actual maximum range is dependent on the range used to compute the RSM.
+
+The ratio of the average atmospheric particle mass and the surface material particle mass is used to analytically compute the normal energy accommodation of particles that strike the clean portion of the satellite. Note that this is the mass (i kg) of a single atom or molecule of the surface material.
+
+

@@ -1,0 +1,16 @@
+RSM Input File ***THE READING OF THIS FILE IS LINE NUMBER DEPENDENT; DO NOT INSERT EMPTY LINES***
+
+******************* Drag Coefficient Controls ******************
+							# [H]   [He]	[N]	[N2]	[O]	[O2]
+Species Mole Fractions [H, He, N, N2, O, O2]		# 0.0	0.0	0.0	0.0	1.0	0.0
+Total Number Density (m^-3)  	      	 		# 1.0e16
+Velocity of Satellite Relative to Atmosphere (km/s)	# 7.500
+Atmospheric Translational Temperature (K)		# 1100.0
+Surface Temperature (K)					# 300.0
+Adsorption model (0=Langmuir; 1=Freundlich)	 	# 1
+Pitch angle (degrees)                                   # 0.0
+Yaw angle (degrees)                                     # 0.0
+Surface material particle mass (kg)                     # 4.479e-26
+Satellite Mass (kg)	       				# 100.0
+Satellite RSM filename (located in "RSM_files")		# CYGNSS_RSM.dat
+Satellite Area filename (located in "RSM_files")	# CYGNSS_area.dat
